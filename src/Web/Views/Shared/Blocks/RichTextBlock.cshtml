@@ -1,0 +1,7 @@
+﻿@model Web.Models.Blocks.RichTextBlock
+@{
+    var x = Model.Text?.ToHtmlString();
+}
+<div class="richtext">
+    @Html.PropertyFor(x => x.Text)
+</div>

@@ -1,0 +1,13 @@
+﻿global using EPiServer;
+global using EPiServer.Cms.Shell.UI.ObjectEditing.EditorDescriptors;
+global using EPiServer.Core;
+global using EPiServer.DataAbstraction;
+global using EPiServer.DataAnnotations;
+global using EPiServer.Framework.Blobs;
+global using EPiServer.Framework.DataAnnotations;
+global using EPiServer.PlugIn;
+global using EPiServer.Shell.ObjectEditing;
+global using EPiServer.SpecializedProperties;
+global using EPiServer.Validation;
+global using EPiServer.Web;
+global using EPiServer.Web.Routing;
