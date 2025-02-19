@@ -10,10 +10,12 @@ namespace Web;
 public class Startup
 {
     private readonly IWebHostEnvironment _webHostingEnvironment;
+    private readonly IConfiguration _configuration;
 
-    public Startup(IWebHostEnvironment webHostingEnvironment)
+    public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
     {
         _webHostingEnvironment = webHostingEnvironment;
+        _configuration = configuration;
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -23,6 +25,10 @@ public class Startup
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
             services.Configure<SchedulerOptions>(options => options.Enabled = false);
+        }
+        else
+        {
+            services.AddCmsCloudPlatformSupport(_configuration);
         }
 
         services
