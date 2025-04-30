@@ -12,5 +12,11 @@ namespace Web.Models.Pages.StartPage
     {
         [Display(Name = "Main Content", Order = 10, GroupName = SystemTabNames.Content)]
         public virtual ContentArea? MainContent { get; set; }
+
+        [Display(Name = "404 Page", Order = 10, GroupName = "Site Settings")]
+        public virtual ContentReference? NotFoundPage { get; set; }
+
+        [Display(Name = "500 Page", Order = 10, GroupName = "Site Settings")]
+        public virtual ContentReference? ErrorPage { get; set; }
     }
 }

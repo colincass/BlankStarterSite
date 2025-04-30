@@ -3,6 +3,7 @@ using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Web.Business;
 using Web.Business.Rendering;
 
 namespace Web;
@@ -35,16 +36,22 @@ public class Startup
             .AddCmsAspNetIdentity<ApplicationUser>()
             .AddCms()
             .AddAdminUserRegistration()
-            .AddEmbeddedLocalization<Startup>();
+            .AddEmbeddedLocalization<Startup>()
+            .AddTinyMceConfiguration();
 
         services.Configure<RazorViewEngineOptions>(options => options.ViewLocationExpanders.Add(new SiteViewEngineLocationExpander()));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
+        if (env.IsDevelopment() && !ImpersonateProduction())
         {
             app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/500");
+            app.UseStatusCodePagesWithReExecute("/{0}");
         }
 
         app.UseStaticFiles();
@@ -56,5 +63,11 @@ public class Startup
         {
             endpoints.MapContent();
         });
+    }
+
+    private bool ImpersonateProduction()
+    {
+        return !string.IsNullOrEmpty(_configuration["ImpersonateProduction"])
+            && _configuration["ImpersonateProduction"] == "true";
     }
 }
